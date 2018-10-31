@@ -1,5 +1,9 @@
 # BlackjackApp
 
+In order to run this program you will need the latest version of Node.js (https://nodejs.org/en/download/current/) on your path
+After pull the code for this repo, you will need to run the command `npm install` from the `blackjack-app` directory.  This will install the dependencies.
+Then, from that same directory, you will need to run the command `ng serve`, and open a browser and navigate to `http://localhost:4200/`.
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.0.2.
 
 ## Development server

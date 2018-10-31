@@ -34,6 +34,9 @@
     <div class="col-md-12">
       <button class="btn btn-primary" (click)="placeBet(0)">Place your bet</button>
       <input [(ngModel)]="bet" type="text">
+      <div *ngIf="showBetValidationMessage">
+        The bet must be a positive number and you must have enough money to bet.
+      </div>
     </div>
   </div>
   <div *ngIf="inRoundEndState()" class="row">

@@ -21,6 +21,7 @@ export class GameComponent implements OnInit, OnDestroy {
   public players: User[] = [];
   public numberOfDecks = 1;
   public userName: string;
+  public showBetValidationMessage = false;
 
   constructor(
     private deckService: DeckService,
@@ -72,17 +73,22 @@ export class GameComponent implements OnInit, OnDestroy {
   }
 
   public placeBet(handIndex: number) {
-    this.deal();
-    this.players[0].hand[handIndex].bet = this.bet;
-    this.players[0].score -= this.bet;
-    this.scoreService.scoreHand(this.players[0].hand[0]);
-    this.scoreService.scoreHand(this.dealer.hand[0]);
-    if (this.players[0].hand[0].outcome === Outcome.BlackJack ||
-      this.players[0].hand[0].outcome === Outcome.TwentyOne ||
-      this.dealer.hand[0].outcome === Outcome.BlackJack) {
-      this.stateService.setCurrentState(GameState.ROUND_END);
+    if (this.betIsValid()) {
+      this.showBetValidationMessage = false;
+      this.deal();
+      this.players[0].hand[handIndex].bet = this.bet;
+      this.players[0].score -= this.bet;
+      this.scoreService.scoreHand(this.players[0].hand[0]);
+      this.scoreService.scoreHand(this.dealer.hand[0]);
+      if (this.players[0].hand[0].outcome === Outcome.BlackJack ||
+        this.players[0].hand[0].outcome === Outcome.TwentyOne ||
+        this.dealer.hand[0].outcome === Outcome.BlackJack) {
+        this.stateService.setCurrentState(GameState.ROUND_END);
+      } else {
+        this.stateService.setCurrentState(GameState.PLAYERS_TURN);
+      }
     } else {
-      this.stateService.setCurrentState(GameState.PLAYERS_TURN);
+      this.showBetValidationMessage = true;
     }
   }
 
@@ -196,5 +202,10 @@ export class GameComponent implements OnInit, OnDestroy {
       }
     }
     return scoreToBeat;
+  }
+
+  private betIsValid(): boolean {
+    const valid = !isNaN(this.bet) && (this.bet * 1) > 0 && (this.bet * 1) < this.players[0].score;
+    return valid;
   }
 }

@@ -1,0 +1,49 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-4">
+      <h2>
+        Dealer
+      </h2>
+    </div>
+  </div>
+  <div *ngFor="let hand of dealer?.hand">
+    <div *ngIf="inRoundEndState()" class="col-md-8">
+      <h3 [innerHTML]="getHandValueAsString(hand)"></h3>
+    </div>
+    <app-hand [hand]="hand" [isDealer]="true"></app-hand>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      <h2>
+        Player: {{ userName }}
+      </h2>
+    </div>
+    <div class="col-md-8">
+      <h2>
+        Score: ${{ players[0].score }}
+      </h2>
+    </div>
+  </div>
+  <div *ngFor="let hand of players[0]?.hand; let i = index">
+    <div>
+      <h3 [innerHTML]="getHandValueAsString(hand)"></h3>
+    </div>
+    <app-hand [hand]="hand" [handIndex]="i" (hitEmitter)="hit($event)" (splitEmitter)="split($event)" (standEmitter)="stand($event)"></app-hand>
+  </div>
+  <div *ngIf="inBettingState()" class="row">
+    <div class="col-md-12">
+      <button class="btn btn-primary" (click)="placeBet(0)">Place your bet</button>
+      <input [(ngModel)]="bet" type="text">
+    </div>
+  </div>
+  <div *ngIf="inRoundEndState()" class="row">
+    <div class="col-md-12">
+      <button class="btn btn-primary" (click)="startRound()">Play Again</button>
+    </div>
+  </div>
+  <div *ngIf="inRoundEndState()" class="row">
+    <div class="col-md-12">
+      <button class="btn btn-primary" (click)="saveGame()">Save Game</button>
+    </div>
+  </div>
+</div>

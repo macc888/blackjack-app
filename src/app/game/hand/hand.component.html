@@ -1,0 +1,16 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="badge" *ngFor="let card of hand?.cards; let i = index">
+        <app-card [card]="card"></app-card>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div *ngIf="!isDealer" class="col-md-12">
+      <button *ngIf="canHit()" class="btn btn-primary" (click)="hit()">Hit</button>
+      <button *ngIf="canHit()" class="btn btn-primary" (click)="stand()">Stand</button>
+      <button *ngIf="canSplit()" class="btn btn-primary" (click)="split()">Split</button>
+    </div>
+  </div>
+</div>

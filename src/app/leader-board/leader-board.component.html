@@ -1,0 +1,14 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <table class="table">
+      <div *ngFor="let entry of leaderBoard">
+        <tr>
+          <td>{{ entry.name }}</td>
+          <td>{{ entry.score }}</td>
+        </tr>
+      </div>
+    </table>
+    </div>
+  </div>
+</div>
